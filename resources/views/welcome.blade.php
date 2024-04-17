@@ -1,19 +1,15 @@
-@extends('layout.app')
+@extends('layoutss.template')
 
-@section('subtitle', 'Welcome')
-@section('content_header_title', 'Home')
-@section('content_header_subtitle', 'Welcome')
+@section('content')
 
-@section('content_body')
-    <p>Welcome to this beautiful admin panel</p>
-@stop
-
-
-@push('css')
-
-@endpush
-
-
-@push('js')
-    <script> console.log("Hi, I'm using the laravel-AdminLTE package!");</script>
-@endpush
+<div class="card">
+  <div class="card-header">
+    <h3 class="card-title">Muhammad Irfan Nur Hakim!</h3>
+    <div class="card-tools"></div>
+  </div>
+  <div class="card-body">
+    Ini merupakan halaman utama dari aplikasi POS (Point of Sales).
+    Silahkan anda mengakses semua fitur aplikasi ini
+  </div>
+</div>
+@endsection
