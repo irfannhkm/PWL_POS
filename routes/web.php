@@ -9,6 +9,9 @@ use App\Http\Controllers\POSController;
 use App\Http\Controllers\BarangController;
 use App\Http\Controllers\StokController;
 use App\Http\Controllers\TransaksiController;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\ManagerController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,13 +28,13 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-// m_user
+//Route m_user
 Route::resource('m_user', POSController::class);
 
-//
+//JS 7
 Route::get('/', [WelcomeController::class, 'index']);
 
-// User
+//JS 7 - User
 Route::group(['prefix' => 'user'], function () {
     Route::get('/', [UserController::class, 'index']); //menampilkan halaman awal user
     Route::post('/list', [UserController::class, 'list']); //menampilkan data user dalam bentuk json untuk database
@@ -43,7 +46,7 @@ Route::group(['prefix' => 'user'], function () {
     Route::delete('/{id}', [UserController::class, 'destroy']); //menghapus data user
 });
 
-// Level
+//JS 7 Tugas - Level
 Route::group(['prefix' => 'level'], function () {
     Route::get('/', [LevelController::class, 'index']); //menampilkan halaman awal level
     Route::post('/list', [LevelController::class, 'list']); //menampilkan data level dalam bentuk json untuk database
@@ -55,7 +58,7 @@ Route::group(['prefix' => 'level'], function () {
     Route::delete('/{id}', [LevelController::class, 'destroy']); //menghapus data level
 });
 
-// Kategori
+//JS 7 Tugas - Kategori
 Route::group(['prefix' => 'kategori'], function () {
     Route::get('/', [KategoriController::class, 'index']); //menampilkan halaman awal kategori
     Route::post('/list', [KategoriController::class, 'list']); //menampilkan data kategori dalam bentuk json untuk database
@@ -67,7 +70,7 @@ Route::group(['prefix' => 'kategori'], function () {
     Route::delete('/{id}', [KategoriController::class, 'destroy']); //menghapus data kategori
 });
 
-// Barang
+//JS 7 Tugas - Barang
 Route::group(['prefix' => 'barang'], function () {
     Route::get('/', [BarangController::class, 'index']); //menampilkan halaman awal barang
     Route::post('/list', [BarangController::class, 'list']); //menampilkan data barang dalam bentuk json untuk database
@@ -79,7 +82,7 @@ Route::group(['prefix' => 'barang'], function () {
     Route::delete('/{id}', [BarangController::class, 'destroy']); //menghapus data barang
 });
 
-// Stok
+//JS 7 Tugas - Stok
 Route::group(['prefix' => 'stok'], function () {
     Route::get('/', [StokController::class, 'index']); //menampilkan halaman awal stok
     Route::post('/list', [StokController::class, 'list']); //menampilkan data stok dalam bentuk json untuk database
@@ -91,7 +94,7 @@ Route::group(['prefix' => 'stok'], function () {
     Route::delete('/{id}', [StokController::class, 'destroy']); //menghapus data stok
 });
 
-// Transaksi
+//JS 7 Tugas - Transaksi
 Route::group(['prefix' => 'transaksi'], function () {
     Route::get('/', [TransaksiController::class, 'index']); //menampilkan halaman awal transaksi
     Route::post('/list', [TransaksiController::class, 'list']); //menampilkan data transaksi dalam bentuk json untuk database
@@ -101,4 +104,25 @@ Route::group(['prefix' => 'transaksi'], function () {
     Route::get('/{id}/edit', [TransaksiController::class, 'edit']); //menampilkan halaman form edit transaksi
     Route::put('/{id}', [TransaksiController::class, 'update']); //menyimpan perubahan data transaksi
     Route::delete('/{id}', [TransaksiController::class, 'destroy']); //menghapus data transaksi
+});
+
+// JS 9
+Route::get('/login', [AuthController::class, 'index'])->name('login');
+Route::get('/register', [AuthController::class, 'register'])->name('register');
+Route::post('/proses_login', [AuthController::class, 'proses_login'])->name('proses_login');
+Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
+Route::post('/proses_register', [AuthController::class, 'proses_register'])->name('proses_register');
+
+// Kita atur juga untuk middleware menggunakan group pada routing
+// didalamnya terdapat group untuk mengecek kondisi login
+// jika user yang login merupakan admin maka akan diarahkan ke AdminController
+// jika user yang login merupakan manager maka akan diarahkan ke UserController
+Route::group(['middleware' => ['auth']], function () {
+
+    Route::group(['middleware' => ['cek_login:1']], function () {
+        Route::resource('admin', AdminController::class);
+    });
+    Route::group(['middleware' => ['cek_login:2']], function () {
+        Route::resource('manager', ManagerController::class);
+    });
 });

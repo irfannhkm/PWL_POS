@@ -15,7 +15,7 @@
         @else
         <table class="table table-bordered table-striped table-hover table-sm">
             <tr>
-                <th>ID </th>
+                <th>ID</th>
                 <td>{{ $barang->barang_id }}</td>
             </tr>
             <tr>

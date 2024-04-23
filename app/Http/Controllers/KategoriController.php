@@ -68,20 +68,10 @@ class KategoriController extends Controller
     // Menyimpan data kategori baru
     public function store(Request $request)
     {
-                // $request->validate([
-        //     'kodeKategori' => 'required|string|min:6|max:10|unique:m_kategori,kategori_kode',
-        //     'namaKategori' => 'required|string|max:100'
-        // ]);
-        $validated = $request->validate(
-            [
-                'kodeKategori' => 'bail|required|unique:m_kategori,kategori_kode',
-                'namaKategori' => 'required'
-            ]
-        );
-        if (!$validated){
-            return redirect('/kategori/create')->withInput()->withErrors($validated);
-        }
-
+        $request->validate([
+            'kodeKategori' => 'required|string|min:6|max:10|unique:m_kategori,kategori_kode',
+            'namaKategori' => 'required|string|max:100'
+        ]);
 
         KategoriModel::create([
             'kategori_kode' => $request->kodeKategori,
