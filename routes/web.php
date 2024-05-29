@@ -11,7 +11,9 @@ use App\Http\Controllers\StokController;
 use App\Http\Controllers\TransaksiController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\FileUploadController;
 use App\Http\Controllers\ManagerController;
+use App\Http\Controllers\UploadController;
 
 /*
 |--------------------------------------------------------------------------
@@ -126,3 +128,10 @@ Route::group(['middleware' => ['auth']], function () {
         Route::resource('manager', ManagerController::class);
     });
 });
+
+// Jobsheet 12
+Route::get('/file-upload', [FileUploadController::class,'fileUpload']);
+Route::post('/file-upload', [FileUploadController::class,'prosesFileUpload']);
+
+Route::get('/upload-gambar', [UploadController::class, 'index']);
+Route::post('/upload-gambar', [UploadController::class, 'prosesUploadGambar']);

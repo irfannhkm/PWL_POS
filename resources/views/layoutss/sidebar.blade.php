@@ -72,6 +72,13 @@
             <p>Transaksi Penjualan</p>
           </a>
         </li>
+        <li class="nav-header">Data File Upload</li>
+        <li class="nav-item">
+          <a href="{{ url('/upload-gambar') }}" class="nav-link {{ ($activeMenu == 'barang')? 'active' : ''}} ">
+            <i class="nav-icon fas fa-upload"></i>
+            <p>Upload Gambar</p>
+          </a>
+        </li>
       </ul>
     </nav>
     <!-- /.sidebar-menu -->
